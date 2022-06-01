@@ -35,7 +35,7 @@
         padding: 8px;
     }
     select,.input-sl{
-        width: 20%;
+        width: 15%;
         border-radius:0.7rem ;
     }
     .button-done{
@@ -89,13 +89,12 @@
     <div class="container-order">
     <h1>Order</h1>
 
-    <p>Sản Phẩm:</p><select ng-options="dependant for dependant in dependants" ng-model="selectedD" ng-init = "true"></select>
-    <p>Size: </p>
-    <select ng-options="gender for gender in genders" ng-model="selectedG" ng-init="selectedG = true"></select>
-    <p>Đơn Giá: {{price}} VND</p>
-    <p>Số Lượng: <input class="input-sl" type="text" min="1" ng-model="quantity"/> </p>
-    <p> Thành Tiền: {{empInsurance()}} VND</p>
-    <p> Thuế VAT: {{incomeTax()}} VND</p>
+    <p>Sản Phẩm : <select ng-options="dependant for dependant in dependants" ng-model="selectedD" ng-init = "true"></select></p>
+    <p>Kích Cỡ : <select ng-options="gender for gender in genders" ng-model="selectedG" ng-init="selectedG = true"></select></p>
+    <p>Đơn Giá : {{price}} VND</p>
+    <p>Số Lượng : <input class="input-sl" type="text" min="1" ng-model="quantity"/></p>
+    <p> Thành Tiền : {{empInsurance()}} VND</p>
+    <p> Thuế VAT : {{incomeTax()}} VND</p>
         <div ng-switch on="selectedD">
             <div ng-switch-when="Nâu Đá"></div>
             <div ng-switch-when="Đen Đá"></div>
