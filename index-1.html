@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./angular.min.js"></script>
+
+</head>
+<style>
+    body{
+        background-image: url("./img/background-ca-phe-bac-siu_034334062.jpg");
+        background-size: cover ;
+        background-repeat:no-repeat ;
+        color: white;
+    }
+    .container{
+        width: 900px;
+        margin-right: auto;
+        margin-left: auto;
+        font-size: 20px;
+
+    }
+
+
+   .container-tb{
+         margin-left: auto;
+         margin-right: auto;
+         font-family: arial, sans-serif;
+         border-collapse: collapse;
+     }
+
+    select,input,td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+    select,.input-sl{
+        width: 20%;
+        border-radius:0.7rem ;
+    }
+    .button-done{
+        color: white;
+        border-radius:15px;
+        background-color: red;
+    }
+</style>
+<body>
+<div class="container"  ng-app="myApp" ng-controller="MathController">
+
+    <div class="container-tb">
+        <h1>Menu</h1>
+        <table>
+            <tr>
+                <th>Sản Phẩm</th>
+                <th>Đơn Giá(Chưa tính VAT)</th>
+                <th>Size S</th>
+                <th>Size M</th>
+                <th>Size L</th>
+
+            </tr>
+            <tr>
+                <td>Nâu Đá</td>
+                <td>10,000</td>
+                <td>10,000</td>
+                <td>15,000</td>
+                <td>20,000</td>
+
+            </tr>
+            <tr>
+                <td>Đen Đá</td>
+                <td>15,000</td>
+                <td>15,000</td>
+                <td>20,000</td>
+                <td>25,000</td>
+
+            </tr>
+            <tr>
+                <td>Bạc Xỉu</td>
+                <td>25,000</td>
+                <td>25,000</td>
+                <td>30,000</td>
+                <td>35,000 </td>
+
+            </tr>
+        </table>
+
+
+    </div>
+    <div class="container-order">
+    <h1>Order</h1>
+
+    <p>Sản Phẩm:</p><select ng-options="dependant for dependant in dependants" ng-model="selectedD" ng-init = "true"></select>
+    <p>Size: </p>
+    <select ng-options="gender for gender in genders" ng-model="selectedG" ng-init="selectedG = true"></select>
+    <p>Đơn Giá: {{price}} VND</p>
+    <p>Số Lượng: <input class="input-sl" type="text" min="1" ng-model="quantity"/> </p>
+    <p> Thành Tiền: {{empInsurance()}} VND</p>
+    <p> Thuế VAT: {{incomeTax()}} VND</p>
+        <div ng-switch on="selectedD">
+            <div ng-switch-when="Nâu Đá"></div>
+            <div ng-switch-when="Đen Đá"></div>
+            <div ng-switch-when="Bạc Xỉu"></div>
+        </div>
+        <div ng-switch on="selectedG">
+            <div ng-switch-when="M"></div>
+            <div ng-switch-when="L"></div>
+            <div ng-switch-when="S"></div>
+        </div>
+
+    <p> Số Tiền Thanh Toán: {{total().toFixed(2) | currency : '' : 0}} VND</p>
+    <input class="button-done" type="button" value="Thanh toán" ng-click="done()"/><br>
+    </div>
+</div>
+<script>
+    var app = angular.module('myApp', []);
+
+    app.controller('MathController', function($scope) {
+        $scope.price = 0;
+        $scope.quantity = "";
+        $scope.genders = ['L' , 'M', 'S'];
+        $scope.selectedG = $scope.genders[0];
+        $scope.dependants = ['Nâu Đá', 'Bạc Xỉu','Đen Đá'];
+        $scope.selectedD = $scope.dependants[0];
+        $scope.done=function () {
+            alert('Đã thanh toán thành công');
+
+        }
+        $scope.empInsurance = function() {
+
+            return (Number($scope.quantity) * (Number($scope.price)));
+        }
+
+        $scope.incomeTax = function() {
+
+            if ($scope.selectedG === "L") {
+                switch($scope.selectedD) {
+                    case "Nâu Đá": $scope.price = 20000;
+                        break;
+                    case "Đen Đá": $scope.price = 25000;
+                        break;
+                    case "Bạc Xỉu": $scope.price = 35000;
+                        break;
+                }
+            }
+            else if ($scope.selectedG === "M") {
+                switch($scope.selectedD) {
+                    case "Nâu Đá": $scope.price = 15000;
+                        break;
+                    case "Đen Đá": $scope.price = 20000;
+                        break;
+                    case "Bạc Xỉu": $scope.price = 30000;
+                        break;
+                }
+            }
+            else {
+                switch($scope.selectedD) {
+                    case "Nâu Đá": $scope.price = 10000;
+                        break;
+                    case "Đen Đá": $scope.price = 15000;
+                        break;
+                    case "Bạc Xỉu": $scope.price = 25000;
+                        break;
+                }
+            }
+            return (Number($scope.quantity) * (Number($scope.price) * 0.1))
+
+        }
+        $scope.total= function(){
+            return (Number($scope.quantity) * (Number($scope.price))) + (Number($scope.quantity) * (Number($scope.price) * 0.1));
+        }
+
+    });
+
+</script>
+
+</body>
+</html>
